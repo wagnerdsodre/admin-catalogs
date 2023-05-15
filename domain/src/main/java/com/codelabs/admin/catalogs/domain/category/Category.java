@@ -1,87 +1,86 @@
 package com.codelabs.admin.catalogs.domain.category;
 
+import com.codelabs.admin.catalogs.domain.AggregateRoot;
 import java.time.Instant;
 import java.util.UUID;
 
 
-public class Category {
-    private String id;
-    private String name;
-    private String description;
-    private Boolean active;
-    private Instant createrAt;
-    private Instant updateAt;
-    private Instant deletedAt;
+public class Category extends AggregateRoot<CategoryId> {
 
-    private Category(final String id, final String name, final String description, final Boolean active, final Instant createrAt, final Instant updateAt, final Instant deletedAt) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.active = active;
-        this.createrAt = createrAt;
-        this.updateAt = updateAt;
-        this.deletedAt = deletedAt;
-    }
+  private String name;
+  private String description;
+  private Boolean active;
+  private Instant createdAt;
+  private Instant updateAt;
+  private Instant deletedAt;
 
-    public static Category newCategory(final String aName, final String aDescription, final boolean isActive) {
-        final var id = UUID.randomUUID().toString();
-        final var now = Instant.now();
-        return new Category(id, aName, aDescription, isActive==true, now, now, null);
-    }
+  private Category(final CategoryId anId, final String anName, final String anDescription,
+      final Boolean isActive, final Instant creationDateAct, final Instant updateDateAct,
+      final Instant deletionDateAct) {
+    super(anId);
+    this.name = anName;
+    this.description = anDescription;
+    this.active = isActive;
+    this.createdAt = creationDateAct;
+    this.updateAt = updateDateAct;
+    this.deletedAt = deletionDateAct;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public static Category newCategory(final String aName, final String aDescription,
+      final boolean isActive) {
+    final var id = CategoryId.unique();
+    final var now = Instant.now();
+    return new Category(id, aName, aDescription, isActive, now, now, null);
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public CategoryId getId() {
+    return id;
+  }
+  public String getName() {
+    return name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public String getDescription() {
+    return description;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public void setDescription(String description) {
+    this.description = description;
+  }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+  public Boolean getActive() {
+    return active;
+  }
 
-    public Boolean getActive() {
-        return active;
-    }
+  public void setActive(Boolean active) {
+    this.active = active;
+  }
 
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
+  public Instant getCreatedAt() {
+    return createdAt;
+  }
 
-    public Instant getCreaterAt() {
-        return createrAt;
-    }
+  public void setCreatedAt(Instant createdAt) {
+    this.createdAt = createdAt;
+  }
 
-    public void setCreaterAt(Instant createrAt) {
-        this.createrAt = createrAt;
-    }
+  public Instant getUpdateAt() {
+    return updateAt;
+  }
 
-    public Instant getUpdateAt() {
-        return updateAt;
-    }
+  public void setUpdateAt(Instant updateAt) {
+    this.updateAt = updateAt;
+  }
 
-    public void setUpdateAt(Instant updateAt) {
-        this.updateAt = updateAt;
-    }
+  public Instant getDeletedAt() {
+    return deletedAt;
+  }
 
-    public Instant getDeletedAt() {
-        return deletedAt;
-    }
-
-    public void setDeletedAt(Instant deletedAt) {
-        this.deletedAt = deletedAt;
-    }
+  public void setDeletedAt(Instant deletedAt) {
+    this.deletedAt = deletedAt;
+  }
 }
